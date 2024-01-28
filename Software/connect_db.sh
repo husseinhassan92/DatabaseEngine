@@ -39,7 +39,7 @@ do
                                             echo "4"
                                         ;;
                                         5)
-                                            echo "5"
+                                            . ../../Software/drop_table.sh
                                         ;;
                                         6)
                                             echo "6"
@@ -89,7 +89,8 @@ do
                                 echo "4"
                             ;;
                             5)
-                                echo "5"
+                                                                            . ../../Software/drop_table.sh
+
                             ;;
                             6)
                                 echo "6"
