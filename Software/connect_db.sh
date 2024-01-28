@@ -31,7 +31,7 @@ do
                                 do
                                     case $REPLY in
                                         1)
-                                            echo "1"
+                                            ./create_table
                                         ;;
                                         2)
                                             echo "2"
