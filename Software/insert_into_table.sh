@@ -17,10 +17,74 @@ case $table_name in
                     [Yy])
                         if [ -f "./$table_name" ]
                         then
-                            echo "message1"
+                            while true; do
+                                read -p "Do You Want ID to be Auto Increment ? [y|N] " condition
+                                case $condition in
+                                    [Yy])
+                                        row_num=`wc -l $table_name | cut -d " " -f 1`
+                                        row_ind="$(($row_num-1))"
+                                        i="$row_ind"
+                                        val=`sed -n "/$i:/p" $table_name | cut -d : -f 1`
+                                        while [[ $val ]]; do
+                                            val=`sed -n "/$i:/p" $table_name | cut -d : -f 1`
+                                            i=$(( $i + 1 ))
+                                        done
+                                        row="$i"
+                                        fileds_num=`head -n1 employee | grep -o ":" | wc -l`
+                                        fields=$(($fileds_num+1))
+                                        for ((i=2; i<=$fields; i++))
+                                        do
+                                            read -p "Enter `cut -d : -f $i  $table_name | head -1` Value: " value
+                                            row+=":$value"
+                                        done
+                                        
+                                        echo "The row Insrted"
+                                        echo $row >> $table_name
+                                    ;;
+                                    [Nn])
+                                        while true; do
+                                            read -p "Enter ID Value: " value
+                                            val=`sed -n "/$value:/p" $table_name | cut -d : -f 1`
+                                            if [[ $val ]]; then
+                                                echo "This ID Already Exists"
+                                                continue
+                                            else
+                                                row_num=`wc -l $table_name | cut -d " " -f 1`
+                                                row="$(($row_num-1))"
+                                                row="$value"
+                                                break
+                                            fi
+                                        done
+                                        fileds_num=`head -n1 employee | grep -o ":" | wc -l`
+                                        fields=$(($fileds_num+1))
+                                        for ((i=2; i<=$fields; i++))
+                                        do
+                                            read -p "Enter `cut -d : -f $i  $table_name | head -1` Value: " value
+                                            row+=":$value"
+                                        done
+                                        
+                                        echo "The row Insrted"
+                                        echo $row >> $table_name
+                                    ;;
+                                    *)
+                                        echo "You Have Entered Invaild Condition"
+                                esac
+                                
+                                read -p "Do You Want Insert another Row? [y|N] " cond
+                                case $cond in
+                                    [Yy])
+                                        continue
+                                    ;;
+                                    [Nn])
+                                        break 2
+                                    ;;
+                                    *)
+                                        echo "You Have Entered Invaild Condition"
+                                esac
+                            done
                         else
                             echo "$table_name Not Found"
-                            break 2
+                            break 
                         fi
                     ;;
                     [Nn])
@@ -38,12 +102,19 @@ case $table_name in
                     case $condition in
                         [Yy])
                             row_num=`wc -l $table_name | cut -d " " -f 1`
+                            row_ind="$(($row_num-1))"
+                            i="$row_ind"
+                            val=`sed -n "/$i:/p" $table_name | cut -d : -f 1`
+                            while [[ $val ]]; do
+                                val=`sed -n "/$i:/p" $table_name | cut -d : -f 1`
+                                i=$(( $i + 1 ))
+                            done
+                            row="$i"
                             fileds_num=`head -n1 employee | grep -o ":" | wc -l`
                             fields=$(($fileds_num+1))
-                            row="$(($row_num-1))"
                             for ((i=2; i<=$fields; i++))
                             do
-                                read -p "Enter `cut -d : -f $i  $table_name | head -1`: " value
+                                read -p "Enter `cut -d : -f $i  $table_name | head -1` Value: " value
                                 row+=":$value"
                             done
                             
@@ -51,12 +122,29 @@ case $table_name in
                             echo $row >> $table_name
                         ;;
                         [Nn])
-                            # for ((i=1; i<=$(($(head -n1 employee | grep -o ":" | wc -l)+1)); i++))
-                            # do
-                            #     read -p "Enter $(cut -d : -f $i  $table_name | head -1): " value
-                            #     row+=":$value"
-                            # done
-                            # echo $row >> $table_name
+                            while true; do
+                                read -p "Enter ID Value: " value
+                                val=`sed -n "/$value:/p" $table_name | cut -d : -f 1`
+                                if [[ $val ]]; then
+                                    echo "This ID Already Exists"
+                                    continue
+                                else
+                                    row_num=`wc -l $table_name | cut -d " " -f 1`
+                                    row="$(($row_num-1))"
+                                    row="$value"
+                                    break
+                                fi
+                            done
+                            fileds_num=`head -n1 employee | grep -o ":" | wc -l`
+                            fields=$(($fileds_num+1))
+                            for ((i=2; i<=$fields; i++))
+                            do
+                                read -p "Enter `cut -d : -f $i  $table_name | head -1` Value: " value
+                                row+=":$value"
+                            done
+                            
+                            echo "The row Insrted"
+                            echo $row >> $table_name
                         ;;
                         *)
                             echo "You Have Entered Invaild Condition"
