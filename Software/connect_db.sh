@@ -31,7 +31,7 @@ do
                                 do
                                     case $REPLY in
                                         1)
-                                            ./create_table
+                                            . ../../Software/create_table.sh
                                         ;;
                                         2)
                                             echo "2"
@@ -81,7 +81,7 @@ do
                     do
                         case $REPLY in
                             1)
-                                echo "1"
+                                . ../../Software/create_table.sh
                             ;;
                             2)
                                 echo "2"
