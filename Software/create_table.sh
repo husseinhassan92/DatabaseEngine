@@ -123,7 +123,7 @@ do
     esac
   done
 done
-
+echo $row_type >> $table_name
 echo "Your Table Metadata is:
        $row_name
        $row_type
