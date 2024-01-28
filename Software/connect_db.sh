@@ -33,7 +33,7 @@ do
                                             echo "2"
                                         ;;
                                         3)
-                                            echo "3"
+                                            . ../../Software/insert_into_table.sh
                                         ;;
                                         4)
                                             echo "4"
@@ -83,7 +83,7 @@ do
                                 echo "2"
                             ;;
                             3)
-                                echo "3"
+                                . ../../Software/insert_into_table.sh
                             ;;
                             4)
                                 echo "4"

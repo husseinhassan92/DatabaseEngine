@@ -2,8 +2,7 @@
 
 while true
 do
-  echo "Write Your Table Name : "
-  read table_name
+  read -p "Enter Table Name : " table_name
 
   case $table_name in
     '')
@@ -52,7 +51,7 @@ done
 let fields_num=$fields_num
 echo "--------------Insert Your Metadata For $table_name -------------"
 row_name=""
-echo "The First Name Will Be Id By DEfult"
+echo "The First Name Will Be Id By Default"
 for ((i=2; i<=$fields_num; i++))
 do
   while true
