@@ -1,0 +1,5 @@
+id:name:email
+integer:string:string
+2:hussein:hussein@test.com
+4:aly:aly@gtest.com
+3:ahmed:ah@test.com
