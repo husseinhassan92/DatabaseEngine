@@ -1,7 +1,4 @@
 id:name:email
 integer:string:string
-2:hussein:hussein@test.com
-4:ali:alo@test.com
-5:abd:abd@test.com
-7:ahmed:ahmed@test.com
-7:hggd:jhhdj@jhlf
+1:hussein:hussein@test.com
+2:ali:ali@test
