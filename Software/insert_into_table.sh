@@ -3,7 +3,7 @@
 read -p "Enter Table Name : " table_name
 case $table_name in
     '')
-        echo "The Name Of Database Can't Be Empty"
+        echo "The Name Of Table Can't Be Empty"
     continue;;
     [0-9]*)
         echo "The Name Can't Begin With a Number"
