@@ -15,7 +15,8 @@ Database engine that handles simple CRUD tasks on data stored in text files.
 - Show Tables
 - Create New Table
 - Insert Data Into Table
-- Delete Table
+- Drop Table
+- Update Data In Table
 
 ## Update Table Operatins:
 
