@@ -30,13 +30,13 @@ do
                                             . ../../Software/create_table.sh
                                         ;;
                                         2)
-                                            echo "2"
+                                            echo "message"
                                         ;;
                                         3)
                                             . ../../Software/insert_into_table.sh
                                         ;;
                                         4)
-                                            echo "4"
+                                            . ../../Software/update_table.sh
                                         ;;
                                         5)
                                             . ../../Software/drop_table.sh
@@ -47,7 +47,7 @@ do
                                         7)
                                             echo "Return to the Main Menu"
                                             cd ../../Software
-                                             ./main.sh; exit $?
+                                            ./main.sh; exit $?
                                         ;;
                                         *)
                                             echo "Invaild choice"
@@ -57,7 +57,7 @@ do
                                 break 2
                             else
                                 echo "$db_name Not Found"
-                                break 2 
+                                break 2
                             fi
                         ;;
                         [Nn])
@@ -89,8 +89,8 @@ do
                                 echo "4"
                             ;;
                             5)
-                                                                            . ../../Software/drop_table.sh
-
+                                . ../../Software/drop_table.sh
+                                
                             ;;
                             6)
                                 echo "6"
