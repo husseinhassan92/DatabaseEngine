@@ -30,7 +30,7 @@ do
                                             . ../../Software/create_table.sh
                                         ;;
                                         2)
-                                            echo "message"
+                                            . ../../Software/list_table.sh $db_name
                                         ;;
                                         3)
                                             . ../../Software/insert_into_table.sh
@@ -42,11 +42,11 @@ do
                                             . ../../Software/drop_table.sh
                                         ;;
                                         6)
-                                            echo "6"
+                                            . ../../Software/update_table.sh
                                         ;;
                                         7)
                                             . ../../Software/delete_from_table.sh
-                                        ;;    
+                                        ;;
                                         8)
                                             echo "Return to the Main Menu"
                                             cd ../../Software
@@ -83,28 +83,22 @@ do
                                 . ../../Software/create_table.sh
                             ;;
                             2)
-                                echo "2"
+                                . ../../Software/list_table.sh $db_name
                             ;;
                             3)
                                 . ../../Software/insert_into_table.sh
                             ;;
                             4)
-                                echo "4"
+                                . ../../Software/update_table.sh
                             ;;
                             5)
-<<<<<<< HEAD
                                 . ../../Software/drop_table.sh
-                                
-=======
-                                    . ../../Software/drop_table.sh
-
->>>>>>> d8e25d00d9c509dda42c371dac9466236ba519d5
                             ;;
                             6)
-                                echo "6"
+                                . ../../Software/update_table.sh
                             ;;
                             7)
-                                    . ../../Software/delete_from_table.sh
+                                . ../../Software/delete_from_table.sh
                             ;;
                             8)
                                 echo "Return to the Main Menu"
