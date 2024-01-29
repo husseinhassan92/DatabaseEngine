@@ -19,38 +19,70 @@ case $table_name in
                         then
                             while true; do
                                 read -p "Enter The ID Of The Row: " pk
-                                row=$(awk -v pk="$pk" -F: '$1 == pk' "$table_name")
-                                if [ -n "$row" ]; then
-                                    echo "The Row To update"
-                                    old_row=$(sed -n "/^$pk:/p" "$table_name")
-                                    echo $old_row
+                                if [[ $pk =~ [0-9]+ ]]; then
+                                    row=$(awk -v pk="$pk" -F: '$1 == pk' "$table_name")
+                                    if [ -n "$row" ]; then
+                                        echo "The Row To update"
+                                        old_row=$(sed -n "/^$pk:/p" "$table_name")
+                                        echo $old_row
+                                    else
+                                        echo "The PK Is Not Exist"
+                                        continue
+                                    fi
+                                    
+                                    fileds_num=`head -n1 $table_name | grep -o ":" | wc -l`
+                                    fields=$(($fileds_num+1))
+                                    read -p "Enter The field index To Update: " index
+                                    if [[ $index =~ [0-9]+ ]]; then
+                                        if (( $index == 1 )); then
+                                            echo "The ID Can't Be Changed"
+                                            elif (( $index > $fields )); then
+                                            echo "The column index Not Found"
+                                        else
+                                            new_row=$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f 1)
+                                            data_type=$(head -n2 $table_name | tail -n1 |cut -d : -f $index)
+                                            read -p "Enter The Value To Update: " value
+                                            if [[ $data_type =~ 'integer' ]]; then
+                                                if [[ $value =~ [0-9]+ ]]; then
+                                                    for ((i=2; i<$index; i++)); do
+                                                        new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
+                                                    done
+                                                    
+                                                    echo $data_type
+                                                    new_row+=":$value"
+                                                    for ((i=(( $index+1)); i<=$fields; i++)); do
+                                                        new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
+                                                    done
+                                                    sed -i "/^$pk:/d" "$table_name"
+                                                    echo "The Row Updated"
+                                                    echo $new_row >> $table_name
+                                                else
+                                                    echo "The Value Must be Integer"
+                                                fi
+                                            else
+                                                for ((i=2; i<$index; i++)); do
+                                                    new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
+                                                done
+                                                new_row+=":$value"
+                                                for ((i=(( $index+1)); i<=$fields; i++)); do
+                                                    new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
+                                                done
+                                                sed -i "/^$pk:/d" "$table_name"
+                                                echo "The Row Updated"
+                                                echo $new_row >> $table_name
+                                            fi
+                                        fi
+                                    else
+                                        echo "ID Must be Integer"
+                                        continue
+                                    fi
                                 else
-                                    echo "The PK Is Not Exist"
+                                    echo "ID Must be Integer"
                                     continue
+                                    
                                 fi
                                 
-                                fileds_num=`head -n1 $table_name | grep -o ":" | wc -l`
-                                fields=$(($fileds_num+1))
-                                read -p "Enter The field index To Update: " index
-                                if (( $index == 1 )); then
-                                    echo "The ID Can't Be Changed"
-                                    elif (( $index > $fields )); then
-                                    echo "The column index Not Found"
-                                else
-                                    new_row=$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f 1)
-                                    for ((i=2; i<$index; i++)); do
-                                        new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
-                                    done
-                                    read -p "Enter The Value To Update: " value
-                                    new_row+=":$value"
-                                    for ((i=(( $index+1)); i<=$fields; i++)); do
-                                        new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
-                                    done
-                                    sed -i "/^$pk:/d" "$table_name"
-                                    echo $new_row >> $table_name
-                                fi
-                                
-                                read -p "Do You Want Insert another Row? [y|N] " cond
+                                read -p "Do You Want Update another Row? [y|N] " cond
                                 case $cond in
                                     [Yy])
                                         continue
@@ -79,38 +111,70 @@ case $table_name in
             then
                 while true; do
                     read -p "Enter The ID Of The Row: " pk
-                    row=$(awk -v pk="$pk" -F: '$1 == pk' "$table_name")
-                    if [ -n "$row" ]; then
-                        echo "The Row To update"
-                        old_row=$(sed -n "/^$pk:/p" "$table_name")
-                        echo $old_row
+                    if [[ $pk =~ [0-9]+ ]]; then
+                        row=$(awk -v pk="$pk" -F: '$1 == pk' "$table_name")
+                        if [ -n "$row" ]; then
+                            echo "The Row To update"
+                            old_row=$(sed -n "/^$pk:/p" "$table_name")
+                            echo $old_row
+                        else
+                            echo "The PK Is Not Exist"
+                            continue
+                        fi
+                        
+                        fileds_num=`head -n1 $table_name | grep -o ":" | wc -l`
+                        fields=$(($fileds_num+1))
+                        read -p "Enter The field index To Update: " index
+                        if [[ $index =~ [0-9]+ ]]; then
+                            if (( $index == 1 )); then
+                                echo "The ID Can't Be Changed"
+                                elif (( $index > $fields )); then
+                                echo "The column index Not Found"
+                            else
+                                new_row=$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f 1)
+                                data_type=$(head -n2 $table_name | tail -n1 |cut -d : -f $index)
+                                read -p "Enter The Value To Update: " value
+                                if [[ $data_type =~ 'integer' ]]; then
+                                    if [[ $value =~ [0-9]+ ]]; then
+                                        for ((i=2; i<$index; i++)); do
+                                            new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
+                                        done
+                                        
+                                        echo $data_type
+                                        new_row+=":$value"
+                                        for ((i=(( $index+1)); i<=$fields; i++)); do
+                                            new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
+                                        done
+                                        sed -i "/^$pk:/d" "$table_name"
+                                        echo "The Row Updated"
+                                        echo $new_row >> $table_name
+                                    else
+                                        echo "The Value Must be Integer"
+                                    fi
+                                else
+                                    for ((i=2; i<$index; i++)); do
+                                        new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
+                                    done
+                                    new_row+=":$value"
+                                    for ((i=(( $index+1)); i<=$fields; i++)); do
+                                        new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
+                                    done
+                                    sed -i "/^$pk:/d" "$table_name"
+                                    echo "The Row Updated"
+                                    echo $new_row >> $table_name
+                                fi
+                            fi
+                        else
+                            echo "ID Must be Integer"
+                            continue
+                        fi
                     else
-                        echo "The PK Is Not Exist"
+                        echo "ID Must be Integer"
                         continue
+                        
                     fi
                     
-                    fileds_num=`head -n1 $table_name | grep -o ":" | wc -l`
-                    fields=$(($fileds_num+1))
-                    read -p "Enter The field index To Update: " index
-                    if (( $index == 1 )); then
-                        echo "The ID Can't Be Changed"
-                        elif (( $index > $fields )); then
-                        echo "The column index Not Found"
-                    else
-                        new_row=$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f 1)
-                        for ((i=2; i<$index; i++)); do
-                            new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
-                        done
-                        read -p "Enter The Value To Update: " value
-                        new_row+=":$value"
-                        for ((i=(( $index+1)); i<=$fields; i++)); do
-                            new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
-                        done
-                        sed -i "/^$pk:/d" "$table_name"
-                        echo $new_row >> $table_name
-                    fi
-                    
-                    read -p "Do You Want Insert another Row? [y|N] " cond
+                    read -p "Do You Want Update another Row? [y|N] " cond
                     case $cond in
                         [Yy])
                             continue
