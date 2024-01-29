@@ -30,7 +30,7 @@ case $table_name in
                                             i=$(( $i + 1 ))
                                         done
                                         row="$i"
-                                        fileds_num=`head -n1 employee | grep -o ":" | wc -l`
+                                        fileds_num=`head -n1 $table_name | grep -o ":" | wc -l`
                                         fields=$(($fileds_num+1))
                                         for ((i=2; i<=$fields; i++))
                                         do
@@ -110,7 +110,7 @@ case $table_name in
                                 i=$(( $i + 1 ))
                             done
                             row="$i"
-                            fileds_num=`head -n1 employee | grep -o ":" | wc -l`
+                            fileds_num=`head -n1 $table_name | grep -o ":" | wc -l`
                             fields=$(($fileds_num+1))
                             for ((i=2; i<=$fields; i++))
                             do

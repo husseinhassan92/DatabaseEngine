@@ -1,5 +1,5 @@
-id:name:email
-integer:string:string
-2:hussein:hussein@test.com
-4:aly:aly@gtest.com
-3:ahmed:ah@test.com
+id:name:email:phone
+integer:string:string:integer
+1:hussein:h@test.com:012
+2:ali:a@test.com:011
+3:ahmed:ah@test.com:010
