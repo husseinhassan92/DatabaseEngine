@@ -23,7 +23,7 @@ do
                                 cd ../.Data/$db_name
                                 echo "$db_name DB Connected"
                                 PS3="$db_name=>"
-                                select option in "Create Table" "Show Tables" "Insert Into Table" "Update Table" "Drop Table" "Use Table" "Return to Main Menu"
+                                select option in "Create Table" "Show Tables" "Insert Into Table" "Update Table" "Drop Table" "Use Table" "Dlete From Table" "Return to Main Menu"
                                 do
                                     case $REPLY in
                                         1)
@@ -45,6 +45,9 @@ do
                                             echo "6"
                                         ;;
                                         7)
+                                            . ../../Software/delete_from_table.sh
+                                        ;;    
+                                        8)
                                             echo "Return to the Main Menu"
                                             cd ../../Software
                                              ./main.sh; exit $?
@@ -73,7 +76,7 @@ do
                     cd ../.Data/$db_name
                     echo "$db_name DB Connected"
                     PS3="$db_name=>"
-                    select option in "Create Table" "Show Tables" "Insert Into Table" "Update Table" "Drop Table" "Use Table" "Return to Main Menu"
+                    select option in "Create Table" "Show Tables" "Insert Into Table" "Update Table" "Drop Table" "Use Table"  "Dlete From Table" "Return to Main Menu"
                     do
                         case $REPLY in
                             1)
@@ -89,13 +92,16 @@ do
                                 echo "4"
                             ;;
                             5)
-                                                                            . ../../Software/drop_table.sh
+                                    . ../../Software/drop_table.sh
 
                             ;;
                             6)
                                 echo "6"
                             ;;
                             7)
+                                    . ../../Software/delete_from_table.sh
+                            ;;
+                            8)
                                 echo "Return to the Main Menu"
                                 cd ../../Software
                                 ./main.sh; exit $?
