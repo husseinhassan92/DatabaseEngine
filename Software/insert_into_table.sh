@@ -32,10 +32,22 @@ case $table_name in
                                         row="$i"
                                         fileds_num=`head -n1 $table_name | grep -o ":" | wc -l`
                                         fields=$(($fileds_num+1))
-                                        for ((i=2; i<=$fields; i++))
-                                        do
-                                            read -p "Enter `cut -d : -f $i  $table_name | head -1` Value: " value
-                                            row+=":$value"
+                                        j=2
+                                        while (( $j<= $fields)); do
+                                            read -p "Enter `cut -d : -f $j  $table_name | head -1` Value: " value
+                                            data_type=$(head -n2 $table_name | tail -n1 |cut -d : -f $j)
+                                            if [[ $data_type =~ 'integer' ]]; then
+                                                if [[ $value =~ [0-9]+ ]]; then
+                                                    row+=":$value"
+                                                    j=$(( $j + 1 ))
+                                                else
+                                                    echo "The value Must Be Integer"
+                                                    continue
+                                                fi
+                                            else
+                                                row+=":$value"
+                                                j=$(( $j + 1 ))
+                                            fi
                                         done
                                         
                                         echo "The row Insrted"
@@ -44,25 +56,40 @@ case $table_name in
                                     [Nn])
                                         while true; do
                                             read -p "Enter ID Value: " value
-                                            val=`sed -n "/$value:/p" $table_name | cut -d : -f 1`
-                                            if [[ $val ]]; then
-                                                echo "This ID Already Exists"
-                                                continue
+                                            if [[ $value =~ [0-9]+ ]]; then
+                                                val=`sed -n "/$value:/p" $table_name | cut -d : -f 1`
+                                                if [[ $val ]]; then
+                                                    echo "This ID Already Exists"
+                                                    continue
+                                                else
+                                                    row_num=`wc -l $table_name | cut -d " " -f 1`
+                                                    row="$(($row_num-1))"
+                                                    row="$value"
+                                                    break
+                                                fi
                                             else
-                                                row_num=`wc -l $table_name | cut -d " " -f 1`
-                                                row="$(($row_num-1))"
-                                                row="$value"
-                                                break
+                                                echo "The value Must Be Integer"
                                             fi
                                         done
-                                        fileds_num=`head -n1 employee | grep -o ":" | wc -l`
+                                        fileds_num=`head -n1 $table_name | grep -o ":" | wc -l`
                                         fields=$(($fileds_num+1))
-                                        for ((i=2; i<=$fields; i++))
-                                        do
-                                            read -p "Enter `cut -d : -f $i  $table_name | head -1` Value: " value
-                                            row+=":$value"
+                                        j=2
+                                        while (( $j<= $fields)); do
+                                            read -p "Enter `cut -d : -f $j  $table_name | head -1` Value: " value
+                                            data_type=$(head -n2 $table_name | tail -n1 |cut -d : -f $j)
+                                            if [[ $data_type =~ 'integer' ]]; then
+                                                if [[ $value =~ [0-9]+ ]]; then
+                                                    row+=":$value"
+                                                    j=$(( $j + 1 ))
+                                                else
+                                                    echo "The value Must Be Integer"
+                                                    continue
+                                                fi
+                                            else
+                                                row+=":$value"
+                                                j=$(( $j + 1 ))
+                                            fi
                                         done
-                                        
                                         echo "The row Insrted"
                                         echo $row >> $table_name
                                     ;;
@@ -84,7 +111,7 @@ case $table_name in
                             done
                         else
                             echo "$table_name Not Found"
-                            break 
+                            break
                         fi
                     ;;
                     [Nn])
@@ -112,37 +139,63 @@ case $table_name in
                             row="$i"
                             fileds_num=`head -n1 $table_name | grep -o ":" | wc -l`
                             fields=$(($fileds_num+1))
-                            for ((i=2; i<=$fields; i++))
-                            do
-                                read -p "Enter `cut -d : -f $i  $table_name | head -1` Value: " value
-                                row+=":$value"
+                            j=2
+                            while (( $j<= $fields)); do
+                                read -p "Enter `cut -d : -f $j  $table_name | head -1` Value: " value
+                                data_type=$(head -n2 $table_name | tail -n1 |cut -d : -f $j)
+                                if [[ $data_type =~ 'integer' ]]; then
+                                    if [[ $value =~ [0-9]+ ]]; then
+                                        row+=":$value"
+                                        j=$(( $j + 1 ))
+                                    else
+                                        echo "The value Must Be Integer"
+                                        continue
+                                    fi
+                                else
+                                    row+=":$value"
+                                    j=$(( $j + 1 ))
+                                fi
                             done
-                            
                             echo "The row Insrted"
                             echo $row >> $table_name
                         ;;
                         [Nn])
                             while true; do
                                 read -p "Enter ID Value: " value
-                                val=`sed -n "/$value:/p" $table_name | cut -d : -f 1`
-                                if [[ $val ]]; then
-                                    echo "This ID Already Exists"
-                                    continue
+                                if [[ $value =~ [0-9]+ ]]; then
+                                    val=`sed -n "/$value:/p" $table_name | cut -d : -f 1`
+                                    if [[ $val ]]; then
+                                        echo "This ID Already Exists"
+                                        continue
+                                    else
+                                        row_num=`wc -l $table_name | cut -d " " -f 1`
+                                        row="$(($row_num-1))"
+                                        row="$value"
+                                        break
+                                    fi
                                 else
-                                    row_num=`wc -l $table_name | cut -d " " -f 1`
-                                    row="$(($row_num-1))"
-                                    row="$value"
-                                    break
+                                    echo "The value Must Be Integer"
                                 fi
                             done
-                            fileds_num=`head -n1 employee | grep -o ":" | wc -l`
+                            fileds_num=`head -n1 $table_name | grep -o ":" | wc -l`
                             fields=$(($fileds_num+1))
-                            for ((i=2; i<=$fields; i++))
-                            do
-                                read -p "Enter `cut -d : -f $i  $table_name | head -1` Value: " value
-                                row+=":$value"
+                            j=2
+                            while (( $j<= $fields)); do
+                                read -p "Enter `cut -d : -f $j  $table_name | head -1` Value: " value
+                                data_type=$(head -n2 $table_name | tail -n1 |cut -d : -f $j)
+                                if [[ $data_type =~ 'integer' ]]; then
+                                    if [[ $value =~ [0-9]+ ]]; then
+                                        row+=":$value"
+                                        j=$(( $j + 1 ))
+                                    else
+                                        echo "The value Must Be Integer"
+                                        continue
+                                    fi
+                                else
+                                    row+=":$value"
+                                    j=$(( $j + 1 ))
+                                fi
                             done
-                            
                             echo "The row Insrted"
                             echo $row >> $table_name
                         ;;
