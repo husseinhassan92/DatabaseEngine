@@ -42,7 +42,7 @@ do
                                             . ../../Software/drop_table.sh
                                         ;;
                                         6)
-                                            . ../../Software/update_table.sh
+                                            . ../../Software/select_from_table.sh
                                         ;;
                                         7)
                                             . ../../Software/delete_from_table.sh
@@ -95,7 +95,7 @@ do
                                 . ../../Software/drop_table.sh
                             ;;
                             6)
-                                . ../../Software/update_table.sh
+                                . ../../Software/select_from_table.sh
                             ;;
                             7)
                                 . ../../Software/delete_from_table.sh
