@@ -23,7 +23,7 @@ do
                                 cd ../.Data/$db_name
                                 echo "$db_name DB Connected"
                                 PS3="$db_name=>"
-                                select option in "Create Table" "Show Tables" "Insert Into Table" "Update Table" "Drop Table" "Use Table" "Dlete From Table" "Return to Main Menu"
+                                select option in "Create Table" "Show Tables" "Insert Into Table" "Update Table" "Drop Table" "Select From Table" "Dlete From Table" "Return to Main Menu"
                                 do
                                     case $REPLY in
                                         1)
@@ -76,7 +76,7 @@ do
                     cd ../.Data/$db_name
                     echo "$db_name DB Connected"
                     PS3="$db_name=>"
-                    select option in "Create Table" "Show Tables" "Insert Into Table" "Update Table" "Drop Table" "Use Table"  "Dlete From Table" "Return to Main Menu"
+                    select option in "Create Table" "Show Tables" "Insert Into Table" "Update Table" "Drop Table" "Select From Table"  "Dlete From Table" "Return to Main Menu"
                     do
                         case $REPLY in
                             1)
