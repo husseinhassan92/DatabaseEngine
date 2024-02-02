@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 while true
 do
@@ -46,11 +46,12 @@ do
   esac
 done
 
-
-# Insert Columns Names
+# Insert Columns Names and Types
 let fields_num=$fields_num
 echo "--------------Insert Your Metadata For $table_name -------------"
 row_name=""
+row_type=""
+
 echo "The First Name Will Be Id By Default"
 for ((i=2; i<=$fields_num; i++))
 do
@@ -75,34 +76,20 @@ do
           if [ $i -eq 2 ]
           then
             row_name+="id:"$col_name
-            break
           else
             row_name+=":$col_name"
-            break
           fi 
+          break
         fi;;
       *)
         echo "You Have Entered an Invalid Name"
         continue
     esac
   done
-done
 
-echo $row_name >> $table_name
-echo "your coulmns Names is : $row_name "
-
-#Insert coulmns Types
-echo "Second insert columns Types"
-echo "The Id Column Will Be Integer By Default"
-
-for ((i=2; i<=$fields_num; i++))
-do
-  echo "Type Your Choice for Field $i"
-
-  # Choice between Integer and String
-  select choice in "String" "Integer"
+  select data_type in "String" "Integer"
   do
-    case $choice in
+    case $data_type in
       "String")
         if [ $i -eq 2 ]; then
           row_type+="integer:string"
@@ -118,13 +105,15 @@ do
         fi
         break;;
       *)
-        echo "Only String and Integer Types are Available"
+        echo "Invalid Data Type"
     esac
   done
 done
-echo $row_type >> $table_name
+
+echo "$row_name" >> $table_name
+echo "$row_type" >> $table_name
+
 echo "Your Table Metadata is:
        $row_name
        $row_type
        "
-
