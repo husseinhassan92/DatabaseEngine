@@ -50,26 +50,14 @@ case $table_name in
                                                     
                                                     echo $data_type
                                                     new_row+=":$value"
-                                                    for ((i=(( $index+1)); i<=$fields; i++)); do
-                                                        new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
-                                                    done
-                                                    sed -i "/^$pk:/d" "$table_name"
-                                                    echo "The Row Updated"
-                                                    echo $new_row >> $table_name
+                                                    value_up="$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $index)"
+                                                    sed -i "s/$value_up/$value/" "$table_name"
                                                 else
                                                     echo "The Value Must be Integer"
                                                 fi
                                             else
-                                                for ((i=2; i<$index; i++)); do
-                                                    new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
-                                                done
-                                                new_row+=":$value"
-                                                for ((i=(( $index+1)); i<=$fields; i++)); do
-                                                    new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
-                                                done
-                                                sed -i "/^$pk:/d" "$table_name"
-                                                echo "The Row Updated"
-                                                echo $new_row >> $table_name
+                                                value_up="$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $index)"
+                                                sed -i "s/$value_up/$value/" "$table_name"
                                             fi
                                         fi
                                     else
@@ -136,32 +124,14 @@ case $table_name in
                                 read -p "Enter The Value To Update: " value
                                 if [[ $data_type =~ 'integer' ]]; then
                                     if [[ $value =~ [0-9]+ ]]; then
-                                        for ((i=2; i<$index; i++)); do
-                                            new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
-                                        done
-                                        
-                                        echo $data_type
-                                        new_row+=":$value"
-                                        for ((i=(( $index+1)); i<=$fields; i++)); do
-                                            new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
-                                        done
-                                        sed -i "/^$pk:/d" "$table_name"
-                                        echo "The Row Updated"
-                                        echo $new_row >> $table_name
+                                        value_up="$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $index)"
+                                        sed -i "s/$value_up/$value/" "$table_name"
                                     else
                                         echo "The Value Must be Integer"
                                     fi
                                 else
-                                    for ((i=2; i<$index; i++)); do
-                                        new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
-                                    done
-                                    new_row+=":$value"
-                                    for ((i=(( $index+1)); i<=$fields; i++)); do
-                                        new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
-                                    done
-                                    sed -i "/^$pk:/d" "$table_name"
-                                    echo "The Row Updated"
-                                    echo $new_row >> $table_name
+                                    value_up="$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $index)"
+                                    sed -i "s/$value_up/$value/" "$table_name"
                                 fi
                             fi
                         else
