@@ -4,14 +4,14 @@ echo "Welocme to MyDB"
 PS3="=>"
 
 if [[ -d "../.Data" ]]; then
-    echo "DB Aleardy Exists"
+    echo ""
 else
     echo "DB created"
     mkdir ../.Data
 fi
 
 
-select option in "Create DB" "List DB" "Connect DB" "Drop DB" "Backup" "Exit"
+select option in "Create DB" "List DB" "Connect DB" "Drop DB" "Exit"
 do
     case $REPLY in
         1)
@@ -27,9 +27,6 @@ do
             . ./drop_db.sh
         ;;
         5)
-            . ./backup_db.sh
-        ;;
-        6)
             echo "Good Bye"
             break
         ;;
