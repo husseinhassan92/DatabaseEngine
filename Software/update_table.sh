@@ -44,12 +44,6 @@ case $table_name in
                                             read -p "Enter The Value To Update: " value
                                             if [[ $data_type =~ 'integer' ]]; then
                                                 if [[ $value =~ [0-9]+ ]]; then
-                                                    for ((i=2; i<$index; i++)); do
-                                                        new_row+=":$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $i)"
-                                                    done
-                                                    
-                                                    echo $data_type
-                                                    new_row+=":$value"
                                                     value_up="$(sed -n "/^$pk:/p" "$table_name" | cut -d : -f $index)"
                                                     sed -i "s/$value_up/$value/" "$table_name"
                                                 else
@@ -76,7 +70,7 @@ case $table_name in
                                         continue
                                     ;;
                                     [Nn])
-                                        break
+                                        break 2
                                     ;;
                                     *)
                                         echo "You Have Entered Invaild Condition"
