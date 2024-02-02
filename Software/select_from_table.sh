@@ -31,6 +31,7 @@ do
         row=$(awk -v pk="$pk" -F: '$1 == pk' "$table_name")
         if [ -n "$row" ]; then
           echo -e "\n${GREEN}------------ Your Selected Row is -------------${RESET}"
+          awk 'NR == 1' "$table_name" | column -t -s ":" | sed 's/^/\t/'
           echo -e "\n$row \n" | column -t -s ":" | sed 's/^/\t/'
         else
           echo -e "\n${RED}This PK Is Not Exist${RESET}\n"
