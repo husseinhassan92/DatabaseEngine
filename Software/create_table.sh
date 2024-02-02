@@ -86,7 +86,7 @@ do
         continue
     esac
   done
-
+  echo "Select The Type Of Your Column"
   select data_type in "String" "Integer"
   do
     case $data_type in
@@ -113,7 +113,7 @@ done
 echo "$row_name" >> $table_name
 echo "$row_type" >> $table_name
 
-echo "Your Table Metadata is:
+echo "----------Your Table Metadata is:
        $row_name
        $row_type
-       "
+       " | column -t -s ":" | sed 's/^/\t/'
