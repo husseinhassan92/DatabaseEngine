@@ -1,0 +1,2 @@
+id:email:phone:location:number
+integer:string:integer:string:integer

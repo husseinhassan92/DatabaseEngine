@@ -1,7 +1,7 @@
 #! /usr/bin/bash
 GREEN='\e[32m'
 RESET='\e[0m'
-
+echo ""
 echo -e  "\n${GREEN}Welocme to MyDB${RESET}\n"| sed 's/^/\t/'
 PS3="=>"
 
