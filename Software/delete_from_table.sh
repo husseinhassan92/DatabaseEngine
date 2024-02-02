@@ -17,7 +17,7 @@ do
     do
         case $choice in
             "DELETE_ALL")
-                sed -i '/^[0-9]/d' "$table_name"
+                sed -i '/^[0-9]+/d' "$table_name"
                 echo "The Table Deleted Successfully"
             ;;
             "DELETE_ROW")
